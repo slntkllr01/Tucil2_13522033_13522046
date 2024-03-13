@@ -35,11 +35,17 @@ def bezier_curve_helper(Point1, Point2, Point3, iteration):
 def bezier_curve_three(p1, p2, p3, n):
     return [p1] + (bezier_curve_helper(p1, p2, p3, n)) + [p3]
 
-def show_graph(list_of_points):
-    list_x = [point[0] for point in list_of_points]
-    list_y = [point[1] for point in list_of_points]
-    plt.plot(list_x, list_y)
+def show_graph(list_of_points, list_of_controls):
+    list_x_points = [point[0] for point in list_of_points]
+    list_y_points = [point[1] for point in list_of_points]
+    list_x_controls = [point[0] for point in list_of_controls]
+    list_y_controls = [point[1] for point in list_of_controls]
+    plt.plot(list_x_controls, list_y_controls, "yo--", label="Control Points")
+    plt.plot(list_x_points, list_y_points, 'b-', label="Bezier Curve")
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.grid(True)
     plt.show()
 
 # print(bezier_curve_n([(1,3), (3,7), (5,2)], 2))
-points = (bezier_curve_three((1,3), (3,7), (5,2), 10))
+# points = (bezier_curve_three((1,3), (3,7), (5,2), 10))
