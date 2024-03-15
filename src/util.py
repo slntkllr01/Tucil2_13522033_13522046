@@ -2,6 +2,19 @@
 
 import matplotlib.pyplot as plt
 
+# Input titik kontrol
+def input_points(num_of_points):
+    li = []
+    for i in range(num_of_points):
+        x = input("Masukkan sumbu-X ke-"+ str(i+1) + ": ")
+        y = input("Masukkan sumbu-Y ke-"+ str(i+1) + ": ")
+        while (not (x.isnumeric and y.isnumeric())):
+            print("Mohon berikan koordinat dalam bentuk angka")
+            x = input("Masukkan sumbu-X ke-"+ str(i+1) + ": ")
+            y = input("Masukkan sumbu-Y ke-"+ str(i+1) + ": ")
+        li.append((int(x),int(y)))
+    return li
+
 # Mencari titik tengah antara dua titik
 def find_middle(p1, p2):
     return ((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2)
