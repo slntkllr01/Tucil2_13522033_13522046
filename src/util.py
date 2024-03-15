@@ -2,32 +2,36 @@
 
 import matplotlib.pyplot as plt
 
-
+# Mencari titik tengah antara dua titik
 def find_middle(p1, p2):
     return ((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2)
 
+# Mencari titik tengah dari seluruh titik
 def find_all_middle(list_of_poinst):
     li = []
     for i in range (len(list_of_poinst) - 1):
         li.append(find_middle(list_of_poinst[i], list_of_poinst[i+1]))
     return li
 
+# Mencari titik kontrol kurva bezier
 def bezier_curve_n_helper(list_of_poinst, iteration):
     if iteration == 0:
         return []
     else:
+        # Divide and Conquer
         initial_lenght = len(list_of_poinst)
         temp = [list_of_poinst[0], list_of_poinst[len(list_of_poinst) - 1]]
         i = 1
         while len(list_of_poinst) != 1:
             list_of_poinst = find_all_middle(list_of_poinst)
             temp.insert(i, list_of_poinst[0])
-            if len(list_of_poinst) > 1:
-                temp.insert(i+1, list_of_poinst[len(list_of_poinst)-1])
+            temp.insert(i+1, list_of_poinst[len(list_of_poinst)-1])
             i += 1
         iteration -= 1
-        return (bezier_curve_n_helper(temp[:initial_lenght], iteration) + list_of_poinst + bezier_curve_n_helper(temp[initial_lenght-1:], iteration))
+        # Merge
+        return (bezier_curve_n_helper(temp[:initial_lenght], iteration) + list_of_poinst + bezier_curve_n_helper(temp[initial_lenght:], iteration))
         
+# Mengembalikan titik awal pada kurva bezier
 def bezier_curve_n(list_of_poinst, iteration):
     return [list_of_poinst[0]] + bezier_curve_n_helper(list_of_poinst, iteration) + [list_of_poinst[len(list_of_poinst)-1]]
 # Divide and Conquer
