@@ -64,9 +64,10 @@ def show_graph(list_of_points, list_of_controls):
     list_y_points = [point[1] for point in list_of_points]
     list_x_controls = [point[0] for point in list_of_controls]
     list_y_controls = [point[1] for point in list_of_controls]
-    plt.plot(list_x_controls, list_y_controls, 'ro--', label='Control Points')
-    plt.plot(list_x_points, list_y_points, 'b-', label='Bezier Curve')
-    # plt.title("Bezier Curve")
+    plt.plot(list_x_controls, list_y_controls, 'ro-', label='Control Points')
+    plt.plot(list_x_points, list_y_points, 'bo--', label='Bezier Curve')
+    plt.legend()
+    plt.title("Bezier Curve")
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.grid(True)
