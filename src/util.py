@@ -1,6 +1,7 @@
 # Ide Algoritma El
 
 import matplotlib.pyplot as plt
+from math import comb
 
 # Input titik kontrol
 def input_points(num_of_points):
@@ -90,7 +91,29 @@ def show_graph(list_of_points, list_of_controls):
     plt.grid(True)
     plt.show()
 
-# print(bezier_curve_n([(1,3), (3,7), (5,2)], 2))
-show_graph([(1,3), (3,7), (5,2), (7,8), (4,5)], (bezier_curve_n([(1,3), (3,7), (5,2), (7,8), (4,5)], 2)))
+def brute_force_bezier(points, iteration):
+    pol_degree = len(points) - 1
+    num_points = 2**iteration + 1
+
+    bezier_points = []
+
+    for i in range (num_points):
+        t = i / (num_points - 1)
+        x, y = 0, 0
+        for j in range (len(points)):
+            point = points[j]
+            bin_coeff = comb(pol_degree, j)
+            weight = bin_coeff * (t ** j) * ((1 - t) ** (pol_degree - j))
+            x += point[0] * weight
+            y += point[1] * weight
+        bezier_points.append((x, y))
+
+    return bezier_points
+
+print(bezier_curve_n([(1,3), (3,7), (5,2), (7,8), (4,5)], 2))
+print(brute_force_bezier([(1,3), (3,7), (5,2), (7,8), (4,5)], 2))
+# show_graph([(1,3), (3,7), (5,2), (7,8), (4,5)], (bezier_curve_n([(1,3), (3,7), (5,2), (7,8), (4,5)], 2)))
 # print(bezier_curve_three((1,3), (3,7), (5,2), 2))
+
+
 
