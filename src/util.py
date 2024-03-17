@@ -3,16 +3,24 @@
 import matplotlib.pyplot as plt
 from math import comb
 
+# Cek float valid
+def is_float(n):
+    try:
+        float(n)
+        return True
+    except ValueError:
+        return False
+
 # Input titik kontrol
 def input_points(num_of_points):
     li = []
     for i in range(num_of_points):
-        print("Titik ke-" + str(i+1))
+        print("\nTitik ke-" + str(i+1))
         x = input("Masukkan sumbu-X ke-"+ str(i+1) + ": ")
         y = input("Masukkan sumbu-Y ke-"+ str(i+1) + ": ")
-        while (not (x.isnumeric and y.isnumeric())):
-            print("Mohon berikan koordinat dalam bentuk angka")
-            print("Titik ke-" + str(i+1))
+        while (not (is_float(x) and is_float(y))):
+            print("Mohon berikan koordinat dalam bentuk angka (float)")
+            print("\nTitik ke-" + str(i+1))
             x = input("Masukkan sumbu-X ke-"+ str(i+1) + ": ")
             y = input("Masukkan sumbu-Y ke-"+ str(i+1) + ": ")
         li.append((float(x),float(y)))
