@@ -70,8 +70,8 @@ def dnc_bezier_helper(list_of_poinst, iteration):
             temp.insert(i+1, list_of_poinst[len(list_of_poinst)-1])
             i += 1
         iteration -= 1
-        plt.plot(list_of_poinst[0][0], list_of_poinst[0][1], marker='.', color="black", markersize=2.5)
-        plt.pause(0.01)
+        # plt.plot(list_of_poinst[0][0], list_of_poinst[0][1], marker='.', color="black", markersize=2.5)
+        # plt.pause(0.01)
         # Merge
         return (dnc_bezier_helper(temp[:initial_lenght], iteration) + list_of_poinst + dnc_bezier_helper(temp[initial_lenght:], iteration))
         
@@ -98,7 +98,6 @@ def brute_force_bezier(points, iteration):
             x += point[0] * weight
             y += point[1] * weight
         bezier_points.append((x, y))
-        plt.plot(x,y, marker='.', color="black", markersize=2.5)
-        plt.pause(0.01)
-
+        # plt.plot(x,y, marker='.', color="black", markersize=2.5)
+        # plt.pause(0.01)
     return bezier_points

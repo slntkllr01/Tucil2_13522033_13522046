@@ -1,6 +1,40 @@
 import tkinter as tk
 from tkinter import ttk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 import util as u
+
+def draw_dnc_plot(canvas, list_of_points, iteration_value):
+    # Buat figure dan axes untuk DNC
+    fig_dnc = Figure(figsize=(5, 4), dpi=100)
+    ax_dnc = fig_dnc.add_subplot(111)
+    
+    # Gunakan fungsi dari modul utilitas untuk mendapatkan data plot DNC
+    dnc_result = u.dnc_bezier(list_of_points, iteration_value)
+    
+    # Plot hasil DNC menggunakan matplotlib
+    ax_dnc.plot([p[0] for p in dnc_result], [p[1] for p in dnc_result], 'r-')
+    
+    # Tanamkan plot DNC ke dalam Tkinter Canvas
+    plot_widget_dnc = FigureCanvasTkAgg(fig_dnc, master=canvas)
+    plot_widget_dnc.draw()
+    plot_widget_dnc.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+def draw_brute_force_plot(canvas, list_of_points, iteration_value):
+    # Buat figure dan axes untuk Brute Force
+    fig_bf = Figure(figsize=(5, 4), dpi=100)
+    ax_bf = fig_bf.add_subplot(111)
+    
+    # Gunakan fungsi dari modul utilitas untuk mendapatkan data plot Brute Force
+    brute_force_result = u.brute_force_bezier(list_of_points, iteration_value)
+    
+    # Plot hasil Brute Force menggunakan matplotlib
+    ax_bf.plot([p[0] for p in brute_force_result], [p[1] for p in brute_force_result], 'b-')
+    
+    # Tanamkan plot Brute Force ke dalam Tkinter Canvas
+    plot_widget_bf = FigureCanvasTkAgg(fig_bf, master=canvas)
+    plot_widget_bf.draw()
+    plot_widget_bf.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
 def start_pressed():
     print("START button pressed")
@@ -17,6 +51,24 @@ def start_pressed():
     print("List of Points:", list_of_points)
     print("Iteration Value:", iteration_value)
 
+    # Panggil fungsi Bezier untuk Divide & Conquer dan Brute Force
+    dnc_result = u.dnc_bezier(list_of_points, iteration_value)
+    brute_force_result = u.brute_force_bezier(list_of_points, iteration_value)
+
+    print(dnc_result)
+    print(brute_force_result)
+
+    # Bersihkan canvas sebelumnya jika ada
+    for widget in canvas_divide_conquer.winfo_children():
+        widget.destroy()
+    for widget in canvas_brute_force.winfo_children():
+        widget.destroy()
+
+    # Gambar plot untuk DNC
+    draw_dnc_plot(canvas_divide_conquer, list_of_points, iteration_value)
+
+    # Gambar plot untuk Brute Force
+    draw_brute_force_plot(canvas_brute_force, list_of_points, iteration_value)
 
 def update_control_points():
     num_points_entry = points_entry.get()
