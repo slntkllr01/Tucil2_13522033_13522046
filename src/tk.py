@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+import time
 import util as u
 
 def draw_dnc_plot(canvas, list_of_points, iteration_value):
@@ -12,8 +13,25 @@ def draw_dnc_plot(canvas, list_of_points, iteration_value):
     # Gunakan fungsi dari modul utilitas untuk mendapatkan data plot DNC
     dnc_result = u.dnc_bezier(list_of_points, iteration_value)
     
+    # Plot proses animasi setiap iterasi
+    '''
+    DI SINI EL, AKU MAU GAMBAR TEMP TIAP ITERASI
+    '''
+    while iteration_value >=0:
+        ax_dnc.clear()
+        temp = []
+        for i in range(0, len(dnc_result), 2**iteration_value):
+            temp.append(dnc_result[i])
+        ax_dnc.plot([p[0] for p in temp], [p[1] for p in temp], 'bo-', markersize=2.5)
+        FigureCanvasTkAgg(fig_dnc, master=canvas).draw()
+        FigureCanvasTkAgg(fig_dnc, master=canvas).get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+        time.sleep(1)
+        iteration_value -= 1
+
     # Plot hasil DNC menggunakan matplotlib
-    ax_dnc.plot([p[0] for p in dnc_result], [p[1] for p in dnc_result], 'r-')
+    ax_dnc.plot([p[0] for p in dnc_result], [p[1] for p in dnc_result], 'bo-', markersize=2.5, label="DNC Bezier Curve")
+    ax_dnc.plot([p[0] for p in list_of_points], [p[1] for p in list_of_points], 'ro--', label="Control Points")
+    ax_dnc.legend()
     
     # Tanamkan plot DNC ke dalam Tkinter Canvas
     plot_widget_dnc = FigureCanvasTkAgg(fig_dnc, master=canvas)
@@ -27,9 +45,26 @@ def draw_brute_force_plot(canvas, list_of_points, iteration_value):
     
     # Gunakan fungsi dari modul utilitas untuk mendapatkan data plot Brute Force
     brute_force_result = u.brute_force_bezier(list_of_points, iteration_value)
-    
+
+    # Plot proses animasi setiap iterasi
+    '''
+    DI SINI EL, AKU MAU GAMBAR TEMP TIAP ITERASI
+    '''
+    while iteration_value >=0:
+        ax_bf.clear()
+        temp = []
+        for i in range(0, len(brute_force_result), 2**iteration_value):
+            temp.append(brute_force_result[i])
+        ax_bf.plot([p[0] for p in temp], [p[1] for p in temp], 'bo-', markersize=2.5)
+        FigureCanvasTkAgg(fig_bf, master=canvas).draw()
+        FigureCanvasTkAgg(fig_bf, master=canvas).get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+        time.sleep(1)
+        iteration_value -= 1
+
     # Plot hasil Brute Force menggunakan matplotlib
-    ax_bf.plot([p[0] for p in brute_force_result], [p[1] for p in brute_force_result], 'b-')
+    ax_bf.plot([p[0] for p in brute_force_result], [p[1] for p in brute_force_result], 'bo-', markersize=2.5, label="Brute Force Bezier Curve")
+    ax_bf.plot([p[0] for p in list_of_points], [p[1] for p in list_of_points], 'ro--', label="Control Points")
+    ax_bf.legend()
     
     # Tanamkan plot Brute Force ke dalam Tkinter Canvas
     plot_widget_bf = FigureCanvasTkAgg(fig_bf, master=canvas)
