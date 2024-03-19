@@ -21,10 +21,16 @@ In each recursion, the number of iteration will be decremented. When the iterati
 ## File Structures
 ```
 *
-├───doc
-├───src
-│   └───__pycache__
-└───test
+├── README.md
+├── doc
+│   └── Tucil2_13522033_13522046.pdf
+├── requirements.txt
+└── src
+    ├── __pycache__
+    │   ├── tkinter.cpython-310.pyc
+    │   └── util.cpython-310.pyc
+    ├── main.py
+    └── util.py
 ```
 
 ## Requirement
